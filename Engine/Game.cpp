@@ -40,20 +40,39 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float speed = 3.0f;
+	if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
+	{
+		e1.TranslateBy( { 0.0f,-speed } );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_UP ) )
+	{
+		e1.TranslateBy( { 0.0f,speed } );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_LEFT ) )
+	{
+		e1.TranslateBy( { -speed,0.0f } );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+	{
+		e1.TranslateBy( { speed,0.0f } );
+	}
+
+	while( !wnd.mouse.IsEmpty() )
+	{
+		const auto e = wnd.mouse.Read();
+		if( e.GetType() == Mouse::Event::Type::WheelUp )
+		{
+			e1.SetScale( e1.GetScale() * 1.05f );
+		}
+		else if( e.GetType() == Mouse::Event::Type::WheelDown )
+		{
+			e1.SetScale( e1.GetScale() * 0.95f );
+		}
+	}
 }
 
 void Game::ComposeFrame()
 {
-	if( wnd.mouse.LeftIsPressed() )
-	{
-		gfx.DrawLine( { 100.0f,100.0f },(Vec2)wnd.mouse.GetPos(),Colors::Yellow );
-	}
-
-	auto poly = Star::Make( 150.0f,75.0f,8 );
-	for( auto& v : poly )
-	{
-		v += Vec2{ 200.0f,200.0f };
-	}
-
-	ct.DrawClosedPolyline( poly,Colors::Red );
+	ct.DrawClosedPolyline( e1.GetPolyline(),Colors::Red );
 }

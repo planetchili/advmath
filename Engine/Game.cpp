@@ -25,7 +25,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	ct( gfx )
 {
 }
 
@@ -54,5 +55,5 @@ void Game::ComposeFrame()
 		v += Vec2{ 200.0f,200.0f };
 	}
 
-	gfx.DrawClosedPolyline( poly,Colors::Red );
+	ct.DrawClosedPolyline( poly,Colors::Red );
 }

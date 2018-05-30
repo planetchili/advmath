@@ -19,6 +19,7 @@
 *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
 ******************************************************************************************/
 #pragma once
+#include <vector>
 #include "ChiliWin.h"
 #include <d3d11.h>
 #include <wrl.h>
@@ -59,6 +60,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawLine( Vec2 p0,Vec2 p1,Color c );
+	void DrawClosedPolyline( const std::vector<Vec2>& verts,Color c );
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

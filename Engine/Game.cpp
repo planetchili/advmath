@@ -46,4 +46,5 @@ void Game::ComposeFrame()
 	{
 		gfx.DrawLine( { 100.0f,100.0f },(Vec2)wnd.mouse.GetPos(),Colors::Yellow );
 	}
+	gfx.DrawClosedPolyline( { {10.0f,10.0f},{100.0f,10.0f},{10.0f,100.0f} },Colors::Red );
 }

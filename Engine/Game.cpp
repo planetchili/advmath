@@ -26,7 +26,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ct( gfx )
+	ct( gfx ),
+	cam( ct )
 {
 	entities.emplace_back( Star::Make( 100.0f,50.0f ),Vec2{ 460.0f,0.0f } );
 	entities.emplace_back( Star::Make( 150.0f,50.0f ),Vec2{ 150.0f,300.0f } );
@@ -48,22 +49,22 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float speed = 3.0f;
-	//if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
-	//{
-	//	e1.TranslateBy( { 0.0f,-speed } );
-	//}
-	//if( wnd.kbd.KeyIsPressed( VK_UP ) )
-	//{
-	//	e1.TranslateBy( { 0.0f,speed } );
-	//}
-	//if( wnd.kbd.KeyIsPressed( VK_LEFT ) )
-	//{
-	//	e1.TranslateBy( { -speed,0.0f } );
-	//}
-	//if( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-	//{
-	//	e1.TranslateBy( { speed,0.0f } );
-	//}
+	if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
+	{
+		cam.MoveBy( { 0.0f,-speed } );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_UP ) )
+	{
+		cam.MoveBy( { 0.0f,speed } );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_LEFT ) )
+	{
+		cam.MoveBy( { -speed,0.0f } );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
+	{
+		cam.MoveBy( { speed,0.0f } );
+	}
 
 	//while( !wnd.mouse.IsEmpty() )
 	//{
@@ -83,6 +84,6 @@ void Game::ComposeFrame()
 {
 	for( const auto& entity : entities )
 	{
-		ct.DrawClosedPolyline( entity.GetPolyline(),Colors::Yellow );
+		cam.DrawClosedPolyline( entity.GetPolyline(),Colors::Yellow );
 	}
 }

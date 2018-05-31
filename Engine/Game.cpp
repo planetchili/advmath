@@ -66,18 +66,18 @@ void Game::UpdateModel()
 		cam.MoveBy( { speed,0.0f } );
 	}
 
-	//while( !wnd.mouse.IsEmpty() )
-	//{
-	//	const auto e = wnd.mouse.Read();
-	//	if( e.GetType() == Mouse::Event::Type::WheelUp )
-	//	{
-	//		e1.SetScale( e1.GetScale() * 1.05f );
-	//	}
-	//	else if( e.GetType() == Mouse::Event::Type::WheelDown )
-	//	{
-	//		e1.SetScale( e1.GetScale() * 0.95f );
-	//	}
-	//}
+	while( !wnd.mouse.IsEmpty() )
+	{
+		const auto e = wnd.mouse.Read();
+		if( e.GetType() == Mouse::Event::Type::WheelUp )
+		{
+			cam.SetScale( cam.GetScale() * 1.05f );
+		}
+		else if( e.GetType() == Mouse::Event::Type::WheelDown )
+		{
+			cam.SetScale( cam.GetScale() * 0.95f );
+		}
+	}
 }
 
 void Game::ComposeFrame()

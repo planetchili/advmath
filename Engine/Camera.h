@@ -26,11 +26,21 @@ public:
 		for( auto& v : poly )
 		{
 			v -= pos;
+			v *= scale;
 		}
 		ct.DrawClosedPolyline( std::move( poly ),c );
+	}
+	void SetScale( float s )
+	{
+		scale = s;
+	}
+	float GetScale() const
+	{
+		return scale;
 	}
 
 private:
 	Vec2 pos = {0.0f,0.0f};
+	float scale = 1.0f;
 	CoordinateTransformer& ct;
 };

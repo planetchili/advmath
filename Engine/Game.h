@@ -46,6 +46,6 @@ private:
 	/********************************/
 	/*  User Variables              */
 	CoordinateTransformer ct;
-	Entity e1 = Star::Make( 200.0f,80.0f,7 );
+	std::vector<Entity> entities;
 	/********************************/
 };

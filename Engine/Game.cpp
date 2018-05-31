@@ -84,6 +84,6 @@ void Game::ComposeFrame()
 {
 	for( const auto& entity : entities )
 	{
-		cam.DrawClosedPolyline( entity.GetPolyline(),Colors::Yellow );
+		cam.Draw( entity.GetDrawable() );
 	}
 }

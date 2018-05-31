@@ -21,14 +21,11 @@ public:
 	{
 		pos = pos_in;
 	}
-	void DrawClosedPolyline( std::vector<Vec2> poly,Color c )
+	void Draw( Drawable& drawable ) const
 	{
-		for( auto& v : poly )
-		{
-			v -= pos;
-			v *= scale;
-		}
-		ct.DrawClosedPolyline( std::move( poly ),c );
+		drawable.Translate( -pos );
+		drawable.Scale( scale );
+		ct.Draw( drawable );
 	}
 	void SetScale( float s )
 	{

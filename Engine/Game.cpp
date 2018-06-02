@@ -30,13 +30,30 @@ Game::Game( MainWindow& wnd )
 	cam( ct ),
 	camCtrl( wnd.mouse,cam )
 {
-	entities.emplace_back( Star::Make( 100.0f,50.0f ),Vec2{ 460.0f,0.0f } );
-	entities.emplace_back( Star::Make( 150.0f,50.0f ),Vec2{ 150.0f,300.0f } );
-	entities.emplace_back( Star::Make( 100.0f,50.0f ),Vec2{ 250.0f,-200.0f } );
-	entities.emplace_back( Star::Make( 150.0f,50.0f ),Vec2{ -250.0f,200.0f } );
-	entities.emplace_back( Star::Make( 100.0f,50.0f ),Vec2{ 0.0f,0.0f } );
-	entities.emplace_back( Star::Make( 200.0f,50.0f ),Vec2{ -150.0f,-300.0f } );
-	entities.emplace_back( Star::Make( 100.0f,50.0f ),Vec2{ 400.0f,300.0f } );
+	std::mt19937 rng( std::random_device{}() );
+	std::uniform_real_distribution<float> xDist( -worldWidth / 2.0f,worldWidth / 2.0f );
+	std::uniform_real_distribution<float> yDist( -worldHeight / 2.0f,worldHeight / 2.0f );
+	std::normal_distribution<float> radDist( meanStarRadius,devStarRadius );
+	std::normal_distribution<float> ratDist( meanInnerRatio,devInnerRatio );
+	std::normal_distribution<float> flareDist( meanFlares,devFlares );
+	const Color colors[] = { Colors::Red,Colors::White,Colors::Blue,Colors::Cyan,Colors::Yellow,Colors::Magenta,Colors::Green };
+	std::uniform_int_distribution<size_t> colorSampler( 0,std::end( colors ) - std::begin( colors ) );
+
+	while( stars.size() < nStars )
+	{
+		const auto rad = std::clamp( radDist( rng ),minStarRadius,maxStarRadius );
+		const Vec2 pos = { xDist( rng ),yDist( rng ) };
+		if( std::any_of( stars.begin(),stars.end(),[&]( const StarBro& sb )
+		{ return (sb.GetPos() - pos).Len() < rad + sb.GetRadius();} ) )
+		{
+			continue;
+		}
+
+		const auto rat = std::clamp( ratDist( rng ),minInnerRatio,maxInnerRatio );
+		const Color c = colors[colorSampler( rng )];
+		const int nFlares = std::clamp( (int)flareDist( rng ),minFlares,maxFlares );
+		stars.emplace_back( pos,rad,rat,nFlares,c );
+	}
 }
 
 void Game::Go()
@@ -54,8 +71,8 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	for( const auto& entity : entities )
+	for( const auto& star : stars )
 	{
-		cam.Draw( entity.GetDrawable() );
+		cam.Draw( star.GetDrawable() );
 	}
 }

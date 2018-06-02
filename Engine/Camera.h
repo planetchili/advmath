@@ -1,6 +1,8 @@
 #pragma once
 
 #include "CoordinateTransformer.h"
+#include "RectF.h"
+#include "Graphics.h"
 
 class Camera
 {
@@ -34,6 +36,15 @@ public:
 	float GetScale() const
 	{
 		return scale;
+	}
+	RectF GetViewportRect() const
+	{
+		const float zoom = 1.0f / scale;
+		return RectF::FromCenter( 
+			pos,
+			float( Graphics::ScreenWidth / 2 ) * zoom,
+			float( Graphics::ScreenHeight / 2 ) * zoom
+		);
 	}
 
 private:

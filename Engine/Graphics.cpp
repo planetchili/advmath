@@ -333,7 +333,7 @@ void Graphics::DrawLine( Vec2 p0,Vec2 p1,Color c )
 
 		const float b = p0.y - m * p0.x;
 
-		for( int x = (int)p0.x; x < (int)p1.x; x++ )
+		for( int x = (int)p0.x; x <= (int)p1.x; x++ )
 		{
 			const float y = m * (float)x + b;
 
@@ -354,7 +354,7 @@ void Graphics::DrawLine( Vec2 p0,Vec2 p1,Color c )
 		const float w = (p1.x - p0.x) / (p1.y - p0.y);
 		const float p = p0.x - w * p0.y;
 
-		for( int y = (int)p0.y; y < (int)p1.y; y++ )
+		for( int y = (int)p0.y; y <= (int)p1.y; y++ )
 		{
 			const float x = w * (float)y + p;
 

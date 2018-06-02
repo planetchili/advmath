@@ -36,7 +36,8 @@ public:
 		if( engaged )
 		{
 			const auto curPos = (Vec2)mouse.GetPos();
-			const auto delta = curPos - lastPos;
+			auto delta = curPos - lastPos;
+			delta.x = -delta.x; // fixes the disconnect between screen coords and math coords
 			cam.MoveBy( delta );
 			lastPos = curPos;
 		}

@@ -20,7 +20,7 @@ public:
 	{}
 	float GetRadius() const
 	{
-		return radius;
+		return radius * GetScale();
 	}
 	float GetMaxRadius() const
 	{

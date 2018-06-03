@@ -31,6 +31,7 @@
 #include "FrameTimer.h"
 #include "Plank.h"
 #include "Ball.h"
+#include "SpawnPoint.h"
 #include <random>
 
 class Game
@@ -56,6 +57,7 @@ private:
 	Camera cam;
 	MouseCameraController camCtrl;
 	Plank plank;
-	Ball ball;
+	std::vector<Ball> balls;
+	SpawnPoint spawn;
 	/********************************/
 };

@@ -44,6 +44,11 @@ public:
 		d.Translate( pos );
 		return d;
 	}
+protected:
+	void SetModel( std::vector<Vec2> model_in )
+	{
+		model = std::move( model_in );
+	}
 private:
 	Color c;
 	float scale = 1.0f;

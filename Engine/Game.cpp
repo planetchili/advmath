@@ -28,7 +28,8 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	ct( gfx ),
 	cam( ct ),
-	camCtrl( wnd.mouse,cam )
+	camCtrl( wnd.mouse,cam ),
+	plank( { 100.0f,200.0f },-380.0f,-100.0f,290.0f )
 {
 }
 
@@ -44,8 +45,17 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	camCtrl.Update();
+	if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
+	{
+		plank.MoveFreeY( -2.0f );
+	}
+	if( wnd.kbd.KeyIsPressed( VK_UP ) )
+	{
+		plank.MoveFreeY( 2.0f );
+	}
 }
 
 void Game::ComposeFrame()
 {
+	cam.Draw( plank.GetDrawable() );
 }

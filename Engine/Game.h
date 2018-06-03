@@ -29,6 +29,7 @@
 #include "Camera.h"
 #include "MouseCameraController.h"
 #include "FrameTimer.h"
+#include "Plank.h"
 #include <random>
 
 class Game
@@ -53,5 +54,6 @@ private:
 	CoordinateTransformer ct;
 	Camera cam;
 	MouseCameraController camCtrl;
+	Plank plank;
 	/********************************/
 };

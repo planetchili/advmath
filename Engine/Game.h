@@ -30,6 +30,7 @@
 #include "MouseCameraController.h"
 #include "FrameTimer.h"
 #include "Plank.h"
+#include "Ball.h"
 #include <random>
 
 class Game
@@ -55,5 +56,6 @@ private:
 	Camera cam;
 	MouseCameraController camCtrl;
 	Plank plank;
+	Ball ball;
 	/********************************/
 };

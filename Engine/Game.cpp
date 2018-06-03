@@ -40,6 +40,8 @@ Game::Game( MainWindow& wnd )
 	std::uniform_int_distribution<size_t> colorSampler( 0,std::end( colors ) - std::begin( colors ) );
 	std::normal_distribution<float> colorFreqDist( meanColorFreq,devColorFreq );
 	std::uniform_real_distribution<float> phaseDist( 0.0f,2.0f * 3.14159f );
+	std::normal_distribution<float> radiusAmplitudeDist( meanRadiusAmplitude,devRadiusAmplitude );
+	std::normal_distribution<float> radiusFreqDist( meanRadiusFreq,devRadiusFreq );
 
 	while( stars.size() < nStars )
 	{
@@ -56,7 +58,10 @@ Game::Game( MainWindow& wnd )
 		const int nFlares = std::clamp( (int)flareDist( rng ),minFlares,maxFlares );
 		const float colorFreq = std::clamp( colorFreqDist( rng ),minColorFreq,maxColorFreq );
 		const float colorPhase = phaseDist( rng );
-		stars.emplace_back( pos,rad,rat,nFlares,c,colorFreq,colorPhase );
+		const float radiusAmplitude = std::clamp( radiusAmplitudeDist( rng ),minRadiusAmplitude,maxRadiusAmplitude );
+		const float radiusFreq = radiusFreqDist( rng );
+		const float radiusPhase = phaseDist( rng );
+		stars.emplace_back( pos,rad,rat,nFlares,c,colorFreq,colorPhase,radiusAmplitude,radiusFreq,radiusPhase );
 	}
 }
 

@@ -71,6 +71,16 @@ private:
 	static constexpr float devColorFreq = 1.0f;
 	static constexpr float minColorFreq = 0.6f;
 	static constexpr float maxColorFreq = 4.0f;
+
+	static constexpr float meanRadiusAmplitude = 0.5f;
+	static constexpr float devRadiusAmplitude = 0.3f;
+	static constexpr float minRadiusAmplitude = 0.1f;
+	static constexpr float maxRadiusAmplitude = 0.9f;
+	static constexpr float meanRadiusFreq = 1.8f;
+	static constexpr float devRadiusFreq = 1.0f;
+	static constexpr float minRadiusFreq = 0.6f;
+	static constexpr float maxRadiusFreq = 4.0f;
+
 	// game objects
 	FrameTimer ft;
 	CoordinateTransformer ct;

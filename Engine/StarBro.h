@@ -22,6 +22,10 @@ public:
 	{
 		return radius;
 	}
+	float GetMaxRadius() const
+	{
+		return radius * (1.0f + radiusFactorAmplitude);
+	}
 	RectF GetBoudingRect() const
 	{
 		return RectF::FromCenter( GetPos(),GetRadius(),GetRadius() );

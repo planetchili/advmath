@@ -46,9 +46,11 @@ Game::Game( MainWindow& wnd )
 	while( stars.size() < nStars )
 	{
 		const auto rad = std::clamp( radDist( rng ),minStarRadius,maxStarRadius );
+		const float radiusAmplitude = std::clamp( radiusAmplitudeDist( rng ),minRadiusAmplitude,maxRadiusAmplitude );
+		const float maxRad = rad * (1.0f + radiusAmplitude);
 		const Vec2 pos = { xDist( rng ),yDist( rng ) };
 		if( std::any_of( stars.begin(),stars.end(),[&]( const StarBro& sb )
-		{ return (sb.GetPos() - pos).Len() < rad + sb.GetRadius();} ) )
+		{ return (sb.GetPos() - pos).Len() < maxRad + sb.GetMaxRadius();} ) )
 		{
 			continue;
 		}
@@ -58,7 +60,6 @@ Game::Game( MainWindow& wnd )
 		const int nFlares = std::clamp( (int)flareDist( rng ),minFlares,maxFlares );
 		const float colorFreq = std::clamp( colorFreqDist( rng ),minColorFreq,maxColorFreq );
 		const float colorPhase = phaseDist( rng );
-		const float radiusAmplitude = std::clamp( radiusAmplitudeDist( rng ),minRadiusAmplitude,maxRadiusAmplitude );
 		const float radiusFreq = radiusFreqDist( rng );
 		const float radiusPhase = phaseDist( rng );
 		stars.emplace_back( pos,rad,rat,nFlares,c,colorFreq,colorPhase,radiusAmplitude,radiusFreq,radiusPhase );

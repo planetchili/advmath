@@ -52,6 +52,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	static constexpr float maxBallDistance = 2000.0f;
+
 	FrameTimer ft;
 	CoordinateTransformer ct;
 	Camera cam;

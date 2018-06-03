@@ -30,7 +30,7 @@ Game::Game( MainWindow& wnd )
 	cam( ct ),
 	camCtrl( wnd.mouse,cam ),
 	plank( { 100.0f,200.0f },-380.0f,-100.0f,290.0f ),
-	spawn( balls,15.0f,{ 0.0f,-250.0f },-100.0f,25.0f,150.0f,0.4f )
+	spawn( balls,15.0f,{ 0.0f,-250.0f },-100.0f,25.0f,150.0f,2.0f )
 {
 }
 
@@ -60,6 +60,14 @@ void Game::UpdateModel()
 	{
 		plank.MoveFreeY( 2.0f );
 	}
+
+	// remove balls that are far out
+	const auto new_end = std::remove_if( balls.begin(),balls.end(),
+		[this]( const Ball& b )
+	{
+		return b.GetPos().LenSq() > maxBallDistance * maxBallDistance;
+	} );
+	balls.erase( new_end,balls.end() );
 }
 
 void Game::ComposeFrame()

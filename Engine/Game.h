@@ -29,6 +29,7 @@
 #include "Camera.h"
 #include "MouseCameraController.h"
 #include "StarBro.h"
+#include "FrameTimer.h"
 #include <random>
 
 class Game
@@ -66,7 +67,12 @@ private:
 	static constexpr float devFlares = 2.0f;
 	static constexpr int minFlares = 3;
 	static constexpr int maxFlares = 10;
+	static constexpr float meanColorFreq = 1.8f;
+	static constexpr float devColorFreq = 1.0f;
+	static constexpr float minColorFreq = 0.6f;
+	static constexpr float maxColorFreq = 4.0f;
 	// game objects
+	FrameTimer ft;
 	CoordinateTransformer ct;
 	Camera cam;
 	MouseCameraController camCtrl;

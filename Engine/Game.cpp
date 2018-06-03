@@ -38,6 +38,8 @@ Game::Game( MainWindow& wnd )
 	std::normal_distribution<float> flareDist( meanFlares,devFlares );
 	const Color colors[] = { Colors::Red,Colors::White,Colors::Blue,Colors::Cyan,Colors::Yellow,Colors::Magenta,Colors::Green };
 	std::uniform_int_distribution<size_t> colorSampler( 0,std::end( colors ) - std::begin( colors ) );
+	std::normal_distribution<float> colorFreqDist( meanColorFreq,devColorFreq );
+	std::uniform_real_distribution<float> phaseDist( 0.0f,2.0f * 3.14159f );
 
 	while( stars.size() < nStars )
 	{
@@ -52,7 +54,9 @@ Game::Game( MainWindow& wnd )
 		const auto rat = std::clamp( ratDist( rng ),minInnerRatio,maxInnerRatio );
 		const Color c = colors[colorSampler( rng )];
 		const int nFlares = std::clamp( (int)flareDist( rng ),minFlares,maxFlares );
-		stars.emplace_back( pos,rad,rat,nFlares,c );
+		const float colorFreq = std::clamp( colorFreqDist( rng ),minColorFreq,maxColorFreq );
+		const float colorPhase = phaseDist( rng );
+		stars.emplace_back( pos,rad,rat,nFlares,c,colorFreq,colorPhase );
 	}
 }
 
@@ -66,7 +70,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float dt = ft.Mark();
 	camCtrl.Update();
+	for( auto& star : stars )
+	{
+		star.Update( dt );
+	}
 }
 
 void Game::ComposeFrame()

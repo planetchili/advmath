@@ -33,6 +33,10 @@ public:
 	{
 		return scale;
 	}
+	void SetColor( Color c_in )
+	{
+		c = c_in;
+	}
 	Drawable GetDrawable() const
 	{
 		Drawable d( model,c );

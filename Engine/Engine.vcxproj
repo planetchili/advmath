@@ -159,7 +159,6 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Star.h" />
-    <ClInclude Include="StarBro.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>

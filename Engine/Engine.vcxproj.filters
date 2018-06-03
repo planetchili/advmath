@@ -78,9 +78,6 @@
     <ClInclude Include="MouseCameraController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StarBro.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RectF.h">
       <Filter>Header Files</Filter>
     </ClInclude>

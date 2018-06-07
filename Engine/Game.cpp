@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Star.h"
+#include "ChiliMath.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -45,8 +46,18 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+
 	for( auto& ball : balls )
 	{
+		const auto plankPts = plank.GetPoints();
+		if( DistancePointLine( plankPts.first,plankPts.second,ball.GetPos() ) < ball.GetRadius() )
+		{
+			const Vec2 w = plank.GetPlankSurfaceVector().GetNormalized();
+			const Vec2 v = ball.GetVel();
+			ball.SetVel( w * (v * w) * 2.0f - v );
+			collideSound.Play();
+		}
+
 		ball.Update( dt );
 	}
 	spawn.Update( dt );
@@ -65,7 +76,7 @@ void Game::UpdateModel()
 	const auto new_end = std::remove_if( balls.begin(),balls.end(),
 		[this]( const Ball& b )
 	{
-		return b.GetPos().LenSq() > maxBallDistance * maxBallDistance;
+		return b.GetPos().LenSq() > sq( maxBallDistance );
 	} );
 	balls.erase( new_end,balls.end() );
 }

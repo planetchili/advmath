@@ -8,7 +8,8 @@ public:
 	Ball( Vec2 pos,float radius,Vec2 vel,Color c = Colors::Red )
 		:
 		Entity( Star::Make( radius,radius,8 ),pos,c ),
-		vel( vel )
+		vel( vel ),
+		radius( radius )
 	{}
 	float GetRadius() const
 	{

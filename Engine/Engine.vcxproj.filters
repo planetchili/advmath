@@ -93,6 +93,9 @@
     <ClInclude Include="SpawnPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ChiliMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">

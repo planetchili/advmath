@@ -50,12 +50,38 @@ void Game::UpdateModel()
 	for( auto& ball : balls )
 	{
 		const auto plankPts = plank.GetPoints();
-		if( DistancePointLine( plankPts.first,plankPts.second,ball.GetPos() ) < ball.GetRadius() )
+		const auto dy = plankPts.second.y - plankPts.first.y;
+		const auto dx = plankPts.second.x - plankPts.first.x;
+		const auto ballPos = ball.GetPos();
+		Vec2 plankNormal;
+		if( dy == 0.0f )
 		{
-			const Vec2 w = plank.GetPlankSurfaceVector().GetNormalized();
-			const Vec2 v = ball.GetVel();
-			ball.SetVel( w * (v * w) * 2.0f - v );
-			collideSound.Play();
+			plankNormal = { 0.0f,ballPos.y > plankPts.first.y ? 1.0f : -1.0f };
+		}
+		else if( dx == 0.0f )
+		{
+			plankNormal = { ballPos.x > plankPts.first.x ? 1.0f : -1.0f,0.0f };
+		}
+		else
+		{
+			const auto m = dy / dx;
+			const auto w = -dx / dy;
+			const auto b = plankPts.first.y - m * plankPts.first.x;
+			const auto p = ballPos.y - w * ballPos.x;
+			const auto x = (p - b) / (m - w);
+			const auto y = m * x + b;
+			plankNormal = ballPos - Vec2{ x,y };
+		}
+
+		if( plankNormal * ball.GetVel() < 0.0f )
+		{
+			if( DistancePointLine( plankPts.first,plankPts.second,ballPos ) < ball.GetRadius() )
+			{
+				const Vec2 w = plank.GetPlankSurfaceVector().GetNormalized();
+				const Vec2 v = ball.GetVel();
+				ball.SetVel( w * (v * w) * 2.0f - v );
+				collideSound.Play();
+			}
 		}
 
 		ball.Update( dt );

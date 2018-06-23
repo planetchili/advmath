@@ -3,6 +3,7 @@
 #include "CoordinateTransformer.h"
 #include "RectF.h"
 #include "Graphics.h"
+#include "ChiliMath.h"
 
 class Camera
 {
@@ -49,11 +50,12 @@ public:
 	RectF GetViewportRect() const
 	{
 		const float zoom = 1.0f / scale;
-		return RectF::FromCenter( 
-			pos,
-			float( Graphics::ScreenWidth / 2 ) * zoom,
-			float( Graphics::ScreenHeight / 2 ) * zoom
+		// do a pessimistic viewport rect that works regardless of the viewport rotation
+		const float diagonal = sqrt(
+			sq( float( Graphics::ScreenWidth / 2 ) * zoom ) +
+			sq( float( Graphics::ScreenHeight / 2 ) * zoom )
 		);
+		return RectF::FromCenter( pos,diagonal,diagonal	);
 	}
 
 private:

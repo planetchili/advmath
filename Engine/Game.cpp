@@ -28,7 +28,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	ct( gfx ),
 	cam( ct ),
-	camCtrl( wnd.mouse,cam )
+	camCtrl( wnd.mouse,wnd.kbd,cam )
 {
 	std::mt19937 rng( std::random_device{}() );
 	std::uniform_real_distribution<float> xDist( -worldWidth / 2.0f,worldWidth / 2.0f );
@@ -79,7 +79,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	camCtrl.Update();
+	camCtrl.Update( dt );
 	for( auto& star : stars )
 	{
 		star.Update( dt );

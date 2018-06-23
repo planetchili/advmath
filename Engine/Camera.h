@@ -27,6 +27,7 @@ public:
 	{
 		drawable.Translate( -pos );
 		drawable.Scale( scale );
+		drawable.Rotate( angle );
 		ct.Draw( drawable );
 	}
 	void SetScale( float s )
@@ -36,6 +37,14 @@ public:
 	float GetScale() const
 	{
 		return scale;
+	}
+	void SetAngle( float a )
+	{
+		angle = a;
+	}
+	float GetAngle() const
+	{
+		return angle;
 	}
 	RectF GetViewportRect() const
 	{
@@ -50,5 +59,6 @@ public:
 private:
 	Vec2 pos = {0.0f,0.0f};
 	float scale = 1.0f;
+	float angle = 0.0f;
 	CoordinateTransformer& ct;
 };

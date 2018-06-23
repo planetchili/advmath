@@ -1,17 +1,28 @@
 #pragma once
 #include "Camera.h"
 #include "Mouse.h"
+#include "ChiliMath.h"
 
 class MouseCameraController
 {
 public:
-	MouseCameraController( Mouse& mouse,Camera& cam )
+	MouseCameraController( Mouse& mouse,const Keyboard& kbd,Camera& cam )
 		:
 		mouse( mouse ),
-		cam( cam )
+		cam( cam ),
+		kbd( kbd )
 	{}
-	void Update()
+	void Update( float dt )
 	{
+		if( kbd.KeyIsPressed( 'Q' ) )
+		{
+			cam.SetAngle( cam.GetAngle() + rotationSpeed * dt );
+		}
+		else if( kbd.KeyIsPressed( 'E' ) )
+		{
+			cam.SetAngle( cam.GetAngle() - rotationSpeed * dt );
+		}
+		
 		while( !mouse.IsEmpty() )
 		{
 			const auto e = mouse.Read();
@@ -44,8 +55,10 @@ public:
 	}
 private:
 	static constexpr float zoomFactor = 1.05f;
+	static constexpr float rotationSpeed = PI / 6.0f;
 	bool engaged = false;
 	Vec2 lastPos;
 	Mouse& mouse;
+	const Keyboard& kbd;
 	Camera& cam;
 };

@@ -59,5 +59,5 @@ private:
 	float radiusFactorAmplitude;
 	float radiusFactorFreqFactor;
 	float radiusFactorPhase;
-	float time;
+	float time = 0.0f;
 };

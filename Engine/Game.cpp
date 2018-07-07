@@ -49,29 +49,11 @@ void Game::UpdateModel()
 
 	for( auto& ball : balls )
 	{
+		const auto plankVector = plank.GetPlankSurfaceVector();
+		// rotate plank vector by -pi/2 to get plank "normal"
+		const auto plankNormal = Vec2{ plankVector.y,-plankVector.x };
 		const auto plankPts = plank.GetPoints();
-		const auto dy = plankPts.second.y - plankPts.first.y;
-		const auto dx = plankPts.second.x - plankPts.first.x;
 		const auto ballPos = ball.GetPos();
-		Vec2 plankNormal;
-		if( dy == 0.0f )
-		{
-			plankNormal = { 0.0f,ballPos.y > plankPts.first.y ? 1.0f : -1.0f };
-		}
-		else if( dx == 0.0f )
-		{
-			plankNormal = { ballPos.x > plankPts.first.x ? 1.0f : -1.0f,0.0f };
-		}
-		else
-		{
-			const auto m = dy / dx;
-			const auto w = -dx / dy;
-			const auto b = plankPts.first.y - m * plankPts.first.x;
-			const auto p = ballPos.y - w * ballPos.x;
-			const auto x = (p - b) / (m - w);
-			const auto y = m * x + b;
-			plankNormal = ballPos - Vec2{ x,y };
-		}
 
 		if( plankNormal * ball.GetVel() < 0.0f )
 		{

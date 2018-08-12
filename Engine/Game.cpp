@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Star.h"
+#include "Mat2.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -66,6 +67,10 @@ Game::Game( MainWindow& wnd )
 		const float rotSpeed = rotspeedDist( rng );
 		stars.emplace_back( pos,rad,rat,nFlares,c,colorFreq,colorPhase,radiusAmplitude,radiusFreq,radiusPhase,rotSpeed );
 	}
+
+	Mat2 m = { 1,3,-6,0 };
+	Vec2 v = { -4,3 };
+	auto w = m * v;
 }
 
 void Game::Go()

@@ -13,6 +13,26 @@ public:
 		vout.y = cells[1][0] * v.x + cells[1][1] * v.y;
 		return vout;
 	}
+	_Mat2 operator*( const _Mat2& rhs ) const
+	{
+		_Mat2 out;
+		for( int row_left = 0; row_left < 2; row_left++ )
+		{
+			for( int col_right = 0; col_right < 2; col_right++ )
+			{
+				out.cells[row_left][col_right] = (T)0;
+				for( int i = 0; i < 2; i++ )
+				{
+					out.cells[row_left][col_right] += cells[row_left][i] * rhs.cells[i][col_right];
+				}
+			}
+		}
+		return out;
+	}
+	_Mat2& operator*=( const _Mat2& rhs )
+	{
+		return *this = *this * rhs;
+	}
 	static _Mat2 Scale( T factor )
 	{
 		return {

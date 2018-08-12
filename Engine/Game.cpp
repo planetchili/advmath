@@ -101,11 +101,10 @@ void Game::ComposeFrame()
 	const auto tform = Mat2::Rotation( 0.3f );
 	const auto tform2 = Mat2::Scale( 2.0f );
 	const auto tform3 = Mat2::FlipY();
+	const auto tformcat = tform3 * tform2 * tform;
 	for( auto& v : star )
 	{
-		v = tform * v;
-		v = tform2 * v;
-		v = tform3 * v;
+		v = tformcat * v;
 	}
 	cam.Draw( Drawable{ star,Colors::Green } );
 }

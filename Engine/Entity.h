@@ -48,9 +48,11 @@ public:
 	Drawable GetDrawable() const
 	{
 		Drawable d( model,c );
-		d.Scale( scale );
-		d.Rotate( angle );
-		d.Translate( pos );
+		d.ApplyTransformation(
+			Mat3::Translation( pos.x,pos.y ) *
+			Mat3::Scale( scale ) *
+			Mat3::Rotation( angle )
+		);
 		return d;
 	}
 private:

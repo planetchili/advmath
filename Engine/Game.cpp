@@ -67,10 +67,6 @@ Game::Game( MainWindow& wnd )
 		const float rotSpeed = rotspeedDist( rng );
 		stars.emplace_back( pos,rad,rat,nFlares,c,colorFreq,colorPhase,radiusAmplitude,radiusFreq,radiusPhase,rotSpeed );
 	}
-
-	Mat2 m = { 1,3,-6,0 };
-	Vec2 v = { -4,3 };
-	auto w = m * v;
 }
 
 void Game::Go()
@@ -93,12 +89,23 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	const auto vp = cam.GetViewportRect();
-	for( const auto& star : stars )
+	//const auto vp = cam.GetViewportRect();
+	//for( const auto& star : stars )
+	//{
+	//	if( star.GetBoudingRect().IsOverlappingWith( vp ) )
+	//	{
+	//		cam.Draw( star.GetDrawable() );
+	//	}
+	//}
+	auto star = Star::Make( 100.0f,50.0f );
+	const auto tform = Mat2::Rotation( 0.3f );
+	const auto tform2 = Mat2::Scale( 2.0f );
+	const auto tform3 = Mat2::FlipY();
+	for( auto& v : star )
 	{
-		if( star.GetBoudingRect().IsOverlappingWith( vp ) )
-		{
-			cam.Draw( star.GetDrawable() );
-		}
+		v = tform * v;
+		v = tform2 * v;
+		v = tform3 * v;
 	}
+	cam.Draw( Drawable{ star,Colors::Green } );
 }

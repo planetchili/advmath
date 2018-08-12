@@ -13,6 +13,33 @@ public:
 		vout.y = cells[1][0] * v.x + cells[1][1] * v.y;
 		return vout;
 	}
+	static _Mat2 Scale( T factor )
+	{
+		return {
+			factor,	(T)0,
+			(T)0,	factor
+		};
+	}
+	static _Mat2 Identity()
+	{
+		return Scale( (T)1 );
+	}
+	static _Mat2 FlipY()
+	{
+		return {
+			(T)1,	(T)0,
+			(T)0,	(T)-1
+		};
+	}
+	static _Mat2 Rotation( T theta)
+	{
+		const auto cost = std::cos( theta );
+		const auto sint = std::sin( theta );
+		return {
+			cost,	-sint,
+			sint,	cost
+		};
+	}
 public:
 	// [row][col]
 	T cells[2][2];

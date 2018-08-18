@@ -8,7 +8,7 @@ class _Mat3
 public:
 	_Vec2<T> operator*( const _Vec2<T>& v ) const
 	{
-		return _Vec2<T>( *this * (Vec3)v );
+		return _Vec2<T>( *this * _Vec3<T>( v ) );
 	}
 	_Vec3<T> operator*( const _Vec3<T>& v ) const
 	{
